@@ -1,7 +1,8 @@
 FROM php:7.4-apache
 
-# Enable Apache rewrite
-RUN a2enmod rewrite
+# Disable conflicting MPMs and enable prefork + rewrite
+RUN a2dismod mpm_event mpm_worker \
+    && a2enmod mpm_prefork rewrite
 
 # Install MySQL extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
