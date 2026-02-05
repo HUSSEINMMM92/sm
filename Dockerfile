@@ -10,8 +10,11 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN mkdir -p /var/lib/php/sessions \
     && chmod -R 777 /var/lib/php/sessions
 
-# Copy project files
+# Copy all project files to Apache root
 COPY . /var/www/html/
 
-# Set permissions
+# Set correct permissions for Apache
 RUN chown -R www-data:www-data /var/www/html
+
+# Optional: make uploads folder writable (if PHPRad uses uploads)
+RUN chmod -R 777 /var/www/html/uploads
